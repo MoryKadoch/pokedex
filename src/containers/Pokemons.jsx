@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Grid, Paper, Box, Typography, Avatar, Chip, Button } from "@mui/material";
 
 export default function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
@@ -33,7 +34,20 @@ export default function Pokemons() {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return(
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Paper elevation={3}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
+                            <Avatar alt="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" sx={{ width: 200, height: 200 }} />
+                            <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+                                Loading...
+                            </Typography>
+                        </Box>
+                    </Paper>
+                </Grid>
+            </Grid>
+        )
     }
 
     if (error) {
@@ -55,21 +69,37 @@ export default function Pokemons() {
     }
 
     return (
-        <div>
-            <h1>Pokemons</h1>
-            <form>
-                <input type="text" placeholder="Search..." onChange={handleChange} />
-            </form>
-            <ul>
-                {pokemons.map((pokemon) => (
-                    <li key={pokemon.name}>
-                        <Link to={`/pokemon/${pokemon.name}`}>
-                            {pokemon.name}
-                            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemon.url.split("/")[6]}.png`} alt={pokemon.name} />
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        // pokemon list with @mui/material designed like pokemon with id, name, types
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
+                    <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+                        Search Pokemon
+                    </Typography>
+                    <input type="text" onChange={handleChange} />
+                </Box>
+            </Grid>
+            {pokemons.map((pokemon) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={pokemon.name}>
+                    <Paper elevation={3}>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
+                            <Avatar alt={pokemon.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}.png`} sx={{ width: 200, height: 200 }} />
+                            <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+                                {pokemon.name}
+                            </Typography>
+                            <Chip label={pokemon.url.split("/")[pokemon.url.split("/").length - 2]} sx={{ mt: 2 }} />
+                            <Button variant="contained" sx={{ mt: 2 }}>
+                                <Link to={`/pokemon/${pokemon.name}`} style={{ textDecoration: "none", color: "white" }}>
+                                    View
+                                </Link>
+                            </Button>
+                        </Box>
+                    </Paper>
+                </Grid>
+            ))}
+            <audio autoPlay loop>
+                <source src="/p1.mp3" type="audio/mpeg" autoPlay loop />
+            </audio>
+        </Grid>
     );
 }

@@ -1,32 +1,17 @@
 import { NavLink } from "react-router-dom";
+//  @mui/material
+import { AppBar, Toolbar, Typography, InputBase, Box, Button } from "@mui/material";
 
 export default function Header() {
     return (
-        <div id="sidebar">
-            <h1>
-                <NavLink
-                    style={({ isActive }) =>
-                        isActive ? { fontWeight: "bold" } : undefined
-                    }
-                    to="/"
-                >
-                    App
-                </NavLink>
-            </h1>
-            <nav>
-                <ul>
-                    <li>
-                        <NavLink
-                            style={({ isActive }) =>
-                                isActive ? { fontWeight: "bold" } : undefined
-                            }
-                            to="/pokemons"
-                        >
-                            Pokedex
-                        </NavLink>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <AppBar position="static">
+            <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <NavLink to="/pokemons" style={{ textDecoration: "none", color: "white" }}>
+                        Pokemons
+                    </NavLink>
+                </Typography>
+            </Toolbar>
+        </AppBar>
     );
 }

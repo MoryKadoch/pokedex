@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Grid, Paper, Box, Typography, Avatar, Chip, Button } from "@mui/material";
+import { Grid, Paper, Box, Typography, Avatar, Chip } from "@mui/material";
 
 // single pokemon
 export default function PokemonDetails() {
@@ -29,7 +29,7 @@ export default function PokemonDetails() {
     }, []);
 
     if (loading) {
-        return(
+        return (
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Paper elevation={3}>
@@ -68,7 +68,6 @@ export default function PokemonDetails() {
                                 key={type.type.name}
                                 label={type.type.name}
                                 sx={{ m: 1 }}
-                                // all types of pokemon
                                 color={type.type.name === "grass" ? "success" : type.type.name === "fire" ? "error" : type.type.name === "water" ? "primary" : type.type.name === "bug" ? "warning" : type.type.name === "normal" ? "info" : type.type.name === "poison" ? "secondary" : type.type.name === "electric" ? "warning" : type.type.name === "ground" ? "info" : type.type.name === "fairy" ? "success" : type.type.name === "fighting" ? "error" : type.type.name === "psychic" ? "primary" : type.type.name === "rock" ? "secondary" : type.type.name === "ghost" ? "info" : type.type.name === "ice" ? "primary" : type.type.name === "dragon" ? "error" : type.type.name === "dark" ? "warning" : type.type.name === "steel" ? "secondary" : type.type.name === "flying" ? "info" : "success"}
                             />
                         ))}
@@ -106,7 +105,7 @@ export default function PokemonDetails() {
                         </Typography>
                         <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", mt: 2 }}>
                             {pokemon.stats.map((stat) => (
-                                <Chip key={stat.stat.name} label={stat.stat.name} sx={{ m: 1 }} />
+                                <Chip key={stat.stat.name} label={stat.stat.name + ": " + stat.base_stat} sx={{ m: 1 }} />
                             ))}
                         </Box>
                     </Box>
@@ -130,4 +129,3 @@ export default function PokemonDetails() {
     );
 }
 
-        

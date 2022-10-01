@@ -22,7 +22,7 @@ export default function Pokemons() {
                 if (search.get("search") !== null) {
                     setPokemons(
                         data.results.filter((pokemon) =>
-                            pokemon.name.includes(search.get("search"))
+                            pokemon.name.includes(search.get("search").toLowerCase())
                         )
                     );
                 }
@@ -34,7 +34,7 @@ export default function Pokemons() {
     }, []);
 
     if (loading) {
-        return(
+        return (
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Paper elevation={3}>
@@ -54,9 +54,13 @@ export default function Pokemons() {
         return <p>{error.message}</p>;
     }
 
+    if (!pokemons) {
+        return null;
+    }
+
     function handleChange(event) {
         const filteredPokemons = data.filter((pokemon) =>
-            pokemon.name.includes(event.target.value)
+            pokemon.name.includes(event.target.value.toLowerCase())
         );
 
         // URL
@@ -69,14 +73,10 @@ export default function Pokemons() {
     }
 
     return (
-        // pokemon list with @mui/material designed like pokemon with id, name, types
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
-                    <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                        Search Pokemon
-                    </Typography>
-                    <input type="text" onChange={handleChange} />
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                    <input type="text" placeholder="Search..." onChange={handleChange} style={{ width: "100%", height: "25px", fontSize: "20px", padding: "10px" }} />
                 </Box>
             </Grid>
             {pokemons.map((pokemon) => (
@@ -97,6 +97,13 @@ export default function Pokemons() {
                     </Paper>
                 </Grid>
             ))}
+            {pokemons.length === 0 && (<Grid item xs={12}>
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                    <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+                        No pokemons found for : {search.get("search")}
+                    </Typography>
+                </Box>
+            </Grid>)}
             <audio autoPlay loop>
                 <source src="/p1.mp3" type="audio/mpeg" autoPlay loop />
             </audio>

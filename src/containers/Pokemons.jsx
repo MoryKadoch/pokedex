@@ -172,7 +172,7 @@ export default function Pokemons() {
                                 {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                             </Typography>
                             <Chip label={`#${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}`} sx={{ mt: 2 }} />
-                            <Button variant="contained" sx={{ mt: 2 }} component={Link} to={`/pokemon/${pokemon.name}`}>View</Button>
+                            <Button variant="contained" sx={{ mt: 2 }} component={Link} to={`/pokemon/${pokemon.name}`}>View Details</Button>
                         </Box>
                     </Paper>
                 </Grid>

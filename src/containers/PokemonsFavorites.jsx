@@ -10,7 +10,7 @@ export default function PokemonsFavorites() {
     useEffect(() => {
         getFavorites();
     }
-        , []);
+    , []);
 
     const getFavorites = () => {
         setLoading(true);
@@ -28,7 +28,7 @@ export default function PokemonsFavorites() {
         return (<CircularProgress />);
     }
     else {
-        if (favorites.length === 0 || favorites === null) {
+        if (favorites === null || favorites.length === 0) {
             return (<Typography variant="h5" component="div" sx={{ textAlign: "center", marginTop: "20px" }}>No favorites yet, go to the <Link to="/">Pokemons</Link> page and add some!</Typography>);
         }
     }

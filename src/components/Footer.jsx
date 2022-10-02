@@ -1,8 +1,5 @@
-//  @mui/material
-import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 
-
-// simple blue bar margin top with github link 
 export default function Footer() {
     return (
         <Box sx={{ bgcolor: "#1976d2", color: "white", p: 2, mt: 2 }}>
@@ -18,5 +15,3 @@ export default function Footer() {
         </Box>
     );
 }
-
-

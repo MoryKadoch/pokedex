@@ -3,13 +3,16 @@ import { AppBar, Toolbar, Typography, Box, Button, Modal, FormControl, TextField
 import { useState } from "react";
 
 export default function Header() {
-
-    // function for display search modal contact form
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    
+    const handleOpen = (e) => {
+        e.preventDefault();
+        setOpen(true);
+    };
+
     const handleClose = () => setOpen(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         let subject = document.getElementById("subject").value;
         let message = document.getElementById("message").value;
         if (subject !== "" && message !== "") {
@@ -30,7 +33,7 @@ export default function Header() {
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <FormControl fullWidth sx={{ mt: 2 }}>
-                            <Input label="Subject" id="subject" />
+                            <Input label="Subject" id="subject" placeholder="Subject" />
                             <TextField label="Message" multiline rows={4} placeholder="Your message to thank me" sx={{ width: "100%", mt: 2 }} id="message" />
                             <Button variant="contained" sx={{ mt: 2 }} onClick={handleSubmit}>Submit</Button>
                         </FormControl>
@@ -39,14 +42,14 @@ export default function Header() {
             </Modal>
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <NavLink to="/pokemons" style={{ textDecoration: "none", color: "white" }}>
+                    <a href="/" style={{ textDecoration: "none", color: "white" }}>
                         <Box>
-                            <img src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png" alt="pokedex" width="100" height="40" />
+                            <img src="/Pok%C3%A9dex_logo.png" alt="pokedex" width="100" height="40" />
                             <Button onClick={handleOpen} variant="contained" sx={{ ml: 2, mt: 1, float: "right" }}>
                                 Contact me
                             </Button>
                         </Box>
-                    </NavLink>
+                    </a>
                 </Typography>
             </Toolbar>
         </AppBar>

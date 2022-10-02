@@ -34,7 +34,7 @@ export default function PokemonDetails() {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Paper elevation={3}>
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
-                            <Avatar alt="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" sx={{ width: 200, height: 200 }} />
+                            <Avatar alt="loading" src="/loader.gif" sx={{ width: 200, height: 200 }} />
                             <Typography variant="h5" component="div" sx={{ mt: 2 }}>
                                 Loading...
                             </Typography>
@@ -54,7 +54,6 @@ export default function PokemonDetails() {
     }
 
     return (
-        // pokemon details with @mui/material designed like pokemon with types, 
         <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={4} lg={3}>
                 <Paper elevation={3}>

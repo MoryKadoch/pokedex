@@ -12,6 +12,7 @@ import Pokemons from "./containers/Pokemons";
 import PokemonDetails from "./containers/PokemonDetails";
 
 import "./index.css";
+import PokemonsByTypes from "./containers/PokemonsByTypes";
 
 const queryClient = new QueryClient();
 
@@ -23,16 +24,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <App></App>,
-      },
-      {
-        path: "/pokemons",
-        element: <Pokemons></Pokemons>,
+        element: <Pokemons/>,
       },
       {
         path: "/pokemon/:slug",
         element: <PokemonDetails />,
       },
+      {
+        path : "/types",
+        element : <PokemonsByTypes/>
+      }
     ],
   },
 ]);

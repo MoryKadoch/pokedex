@@ -60,7 +60,7 @@ export default function PokemonDetails() {
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
                         <Avatar alt={pokemon.name} src={pokemon.sprites.other["official-artwork"].front_default} sx={{ width: 200, height: 200 }} />
                         <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                            {pokemon.name}
+                            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                         </Typography>
                         {pokemon.types.map((type) => (
                             <Chip

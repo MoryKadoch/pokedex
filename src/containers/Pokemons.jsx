@@ -7,10 +7,14 @@ export default function Pokemons() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
     const params = new URLSearchParams(window.location.search);
 
     useEffect(() => {
+        getPokemons();
+    }, []);
+
+    const getPokemons = () => {
+        const params = new URLSearchParams(window.location.search);
         if (params.get("type") === null) {
             var url = "https://pokeapi.co/api/v2/pokemon?limit=151";
         } else {
@@ -20,9 +24,7 @@ export default function Pokemons() {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                console.log(url);
                 if (params.get("type") === null) {
-                    console.log(data.results);
                     setPokemons(data.results);
                     setData(data.results);
                 }
@@ -49,7 +51,7 @@ export default function Pokemons() {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }
 
     if (loading) {
         return (
@@ -99,6 +101,10 @@ export default function Pokemons() {
         // URL
         // chip value
         let type = event.target.parentNode.getAttribute("value");
+        if (type === null) {
+            type = event.target.getAttribute("value");
+        }
+
         if (type !== null) {
             // if all remove type
             if (type === "all") {
@@ -116,25 +122,25 @@ export default function Pokemons() {
                         `?search=${params.get("search")}`
                     );
                 }
-                window.location.reload();
+                getPokemons();
                 return;
             }
-            console.log(event.target.parentNode);
             if (params.get("search") === null) {
                 window.history.pushState(
                     {},
                     "",
                     `?type=${type}`
                 );
+                getPokemons();
             } else {
                 window.history.pushState(
                     {},
                     "",
                     `?type=${type}&search=${params.get("search")}`
                 );
+                getPokemons();
             }
-            // reload
-            window.location.reload();
+
             return;
         }
     }
@@ -150,25 +156,25 @@ export default function Pokemons() {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                    <input type="text" placeholder="Search..." onChange={handleChange} style={{ width: "100%", height: "25px", fontSize: "20px", padding: "10px" }} />
+                    <input type="text" placeholder="Search..." onChange={handleChange} style={{ width: "100%", height: "25px", fontSize: "20px", padding: "10px" }} value={params.get("search") === null ? "" : params.get("search")} />
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", mt: 2, width: "100%" }}>
+                <Box sx={{ justifyContent: "center", mt: 2, width: "100%" }}>
                     <Chip label="All" value="all" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Normal" value="normal" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Fire" value="fire" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Water" value="water" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Electric" value="electric" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Grass" value="grass" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Ice" value="ice" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Fighting" value="fighting" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Poison" value="poison" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Ground" value="ground" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Flying" value="flying" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Psychic" value="psychic" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Bug" value="bug" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Rock" value="rock" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Ghost" value="ghost" onClick={handleChange2} sx={{ m: 1 }} />
-                    <Chip label="Dragon" value="dragon" onClick={handleChange2} sx={{ m: 1 }} />
+                    <Chip label="Normal" value="normal" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "normal" ? "primary" : "default"} />
+                    <Chip label="Fire" value="fire" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "fire" ? "primary" : "default"} />
+                    <Chip label="Water" value="water" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "water" ? "primary" : "default"} />
+                    <Chip label="Electric" value="electric" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "electric" ? "primary" : "default"} />
+                    <Chip label="Grass" value="grass" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "grass" ? "primary" : "default"} />
+                    <Chip label="Ice" value="ice" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "ice" ? "primary" : "default"} />
+                    <Chip label="Fighting" value="fighting" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "fighting" ? "primary" : "default"} />
+                    <Chip label="Poison" value="poison" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "poison" ? "primary" : "default"} />
+                    <Chip label="Ground" value="ground" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "ground" ? "primary" : "default"} />
+                    <Chip label="Flying" value="flying" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "flying" ? "primary" : "default"} />
+                    <Chip label="Psychic" value="psychic" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "psychic" ? "primary" : "default"} />
+                    <Chip label="Bug" value="bug" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "bug" ? "primary" : "default"} />
+                    <Chip label="Rock" value="rock" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "rock" ? "primary" : "default"} />
+                    <Chip label="Ghost" value="ghost" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "ghost" ? "primary" : "default"} />
+                    <Chip label="Dragon" value="dragon" onClick={handleChange2} sx={{ m: 1 }} color={params.get("type") === "dragon" ? "primary" : "default"} />
                 </Box>
             </Grid>
             {pokemons.map((pokemon) => (
@@ -177,9 +183,9 @@ export default function Pokemons() {
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
                             <Avatar alt={pokemon.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}.png`} sx={{ width: 200, height: 200 }} />
                             <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                                {pokemon.name}
+                                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                             </Typography>
-                            <Chip label={pokemon.url.split("/")[pokemon.url.split("/").length - 2]} sx={{ mt: 2 }} />
+                            <Chip label={`#${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}`} sx={{ mt: 2 }} />
                             <Button variant="contained" sx={{ mt: 2 }} component={Link} to={`/pokemon/${pokemon.name}`}>View</Button>
                         </Box>
                     </Paper>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Grid, Paper, Box, Typography, Avatar, Chip } from "@mui/material";
+import { Grid, Paper, Box, Typography, Avatar, Chip, CircularProgress } from "@mui/material";
+import { FavoriteBorder, Favorite } from "@mui/icons-material";
 
 // single pokemon
 export default function PokemonDetails() {
@@ -12,14 +13,11 @@ export default function PokemonDetails() {
 
     useEffect(() => {
         var url = 'https://pokeapi.co/api/v2/pokemon/' + slug;
-        console.log(url);
         setLoading(true);
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
                 setPokemon(data);
-                console.log(data.types);
-                console.log(pokemon.types);
                 setLoading(false);
             })
             .catch((error) => {
@@ -28,21 +26,21 @@ export default function PokemonDetails() {
             });
     }, []);
 
+    const addFavorite = (event, pokemon) => {
+        var favorites = JSON.parse(localStorage.getItem("favorites"));
+        if (favorites === null) {
+            favorites = [];
+        }
+        favorites.push({ name: pokemon.name, img: pokemon.sprites.other["official-artwork"].front_default });
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        event.currentTarget.style.display = "none";
+        var audio = new Audio('https://vgmsite.com/soundtracks/pokemon-firered-leafgreen-music-super-complete/rwcuukktpw/09%20Fanfare-%20Pok%C3%A9mon%20Obtained.mp3');
+        audio.play();
+        alert(`${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} was added to favorites! 🎉 \nClick on the heart icon in the top right corner to view your favorites.`);
+    }
+
     if (loading) {
-        return (
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                    <Paper elevation={3}>
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
-                            <Avatar alt="loading" src="/loader.gif" sx={{ width: 200, height: 200 }} />
-                            <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                                Loading...
-                            </Typography>
-                        </Box>
-                    </Paper>
-                </Grid>
-            </Grid>
-        )
+        return (<CircularProgress />);
     }
 
     if (error) {
@@ -58,6 +56,7 @@ export default function PokemonDetails() {
             <Grid item xs={12} sm={6} md={4} lg={3}>
                 <Paper elevation={3}>
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
+                        {JSON.parse(localStorage.getItem("favorites"))?.find((favorite) => favorite.name === pokemon.name) ? <Chip label="In my favorites" icon={<Favorite />} sx={{ ml: 2, mt: 2 }} /> : <Chip label="Add to favorites" icon={<FavoriteBorder />} onClick={(event) => addFavorite(event, pokemon)} sx={{ ml: 2, mt: 2 }} />}
                         <Avatar alt={pokemon.name} src={pokemon.sprites.other["official-artwork"].front_default} sx={{ width: 200, height: 200 }} />
                         <Typography variant="h5" component="div" sx={{ mt: 2 }}>
                             {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
@@ -67,7 +66,7 @@ export default function PokemonDetails() {
                                 key={type.type.name}
                                 label={type.type.name}
                                 sx={{ m: 1 }}
-                                color={type.type.name === "grass" ? "success" : type.type.name === "fire" ? "error" : type.type.name === "water" ? "primary" : type.type.name === "bug" ? "warning" : type.type.name === "normal" ? "info" : type.type.name === "poison" ? "secondary" : type.type.name === "electric" ? "warning" : type.type.name === "ground" ? "info" : type.type.name === "fairy" ? "success" : type.type.name === "fighting" ? "error" : type.type.name === "psychic" ? "primary" : type.type.name === "rock" ? "secondary" : type.type.name === "ghost" ? "info" : type.type.name === "ice" ? "primary" : type.type.name === "dragon" ? "error" : type.type.name === "dark" ? "warning" : type.type.name === "steel" ? "secondary" : type.type.name === "flying" ? "info" : "success"}
+                                color={type.type.name === "grass" ? "success" : type.type.name === "fire" ? "error" : type.type.name === "water" ? "primary" : type.type.name === "bug" ? "warning" : type.type.name === "normal" ? "default" : type.type.name === "poison" ? "secondary" : type.type.name === "electric" ? "warning" : type.type.name === "ground" ? "info" : type.type.name === "fairy" ? "success" : type.type.name === "fighting" ? "error" : type.type.name === "psychic" ? "primary" : type.type.name === "rock" ? "secondary" : type.type.name === "ghost" ? "info" : type.type.name === "ice" ? "primary" : type.type.name === "dragon" ? "error" : type.type.name === "dark" ? "warning" : type.type.name === "steel" ? "secondary" : type.type.name === "flying" ? "info" : "success"}
                             />
                         ))}
                         <Typography variant="body1" component="div" sx={{ mt: 2 }}>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Paper, Box, Typography, Avatar, Chip, Button } from "@mui/material";
+import { Grid, Paper, Box, Typography, Avatar, Chip, Button, CircularProgress } from "@mui/material";
 
 export default function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
@@ -54,20 +54,7 @@ export default function Pokemons() {
     }
 
     if (loading) {
-        return (
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                    <Paper elevation={3}>
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}>
-                            <Avatar alt="loading" src="/loader.gif" sx={{ width: 200, height: 200 }} />
-                            <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                                Loading...
-                            </Typography>
-                        </Box>
-                    </Paper>
-                </Grid>
-            </Grid>
-        )
+        return (<CircularProgress />);
     }
 
     if (error) {
@@ -106,7 +93,6 @@ export default function Pokemons() {
         }
 
         if (type !== null) {
-            // if all remove type
             if (type === "all") {
                 if (params.get("search") === null) {
                     window.history.pushState(
@@ -156,7 +142,7 @@ export default function Pokemons() {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                    <input type="text" placeholder="Search..." onChange={handleChange} style={{ width: "100%", height: "25px", fontSize: "20px", padding: "10px" }} value={params.get("search") === null ? "" : params.get("search")} />
+                    <input type="text" placeholder="Search..." onChange={handleChange} style={{ width: "100%", height: "25px", fontSize: "20px", padding: "10px" }} value={params.get("search") === undefined ? "" : params.get("search") } />
                 </Box>
                 <Box sx={{ justifyContent: "center", mt: 2, width: "100%" }}>
                     <Chip label="All" value="all" onClick={handleChange2} sx={{ m: 1 }} />
@@ -200,7 +186,7 @@ export default function Pokemons() {
                 </Box>
             </Grid>)}
             <audio autoPlay loop>
-                <source src="/p1.mp3" type="audio/mpeg" autoPlay loop />
+                <source src="https://vgmsite.com/soundtracks/pokemon-firered-leafgreen-music-super-complete/nixinsogwg/03%20Title%20Screen.mp3" type="audio/mpeg" autoPlay loop />
             </audio>
         </Grid>
     );

@@ -10,9 +10,10 @@ import ErrorPage from "./error-page";
 import App from "./App";
 import Pokemons from "./containers/Pokemons";
 import PokemonDetails from "./containers/PokemonDetails";
+import PokemonsFavorites from "./containers/PokemonsFavorites";
 
 import "./index.css";
-import PokemonsByTypes from "./containers/PokemonsByTypes";
+import { Favorite } from "@mui/icons-material";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +32,8 @@ const router = createBrowserRouter([
         element: <PokemonDetails />,
       },
       {
-        path : "/types",
-        element : <PokemonsByTypes/>
+        path: "/favorites",
+        element: <PokemonsFavorites />,
       }
     ],
   },

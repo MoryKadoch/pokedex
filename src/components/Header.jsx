@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Box, Button, Modal, FormControl, TextField, Input } from "@mui/material";
 import { useState } from "react";
+import { Favorite } from "@mui/icons-material";
 
 export default function Header() {
     const [open, setOpen] = useState(false);
-    
+
     const handleOpen = (e) => {
         e.preventDefault();
         setOpen(true);
@@ -42,14 +43,16 @@ export default function Header() {
             </Modal>
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                        <Box>
+                    <Box>
+                        <a href="/" style={{ textDecoration: "none", color: "white" }}>
                             <img src="/Pok%C3%A9dex_logo.png" alt="pokedex" width="100" height="40" />
-                            <Button onClick={handleOpen} variant="contained" sx={{ ml: 2, mt: 1, float: "right" }}>
-                                Contact me
-                            </Button>
-                        </Box>
-                    </a>
+                        </a>
+                        <NavLink to="/favorites" style={{ textDecoration: "none", color: "white", float: "right", marginTop: 13, marginLeft: 10 }}><Favorite /></NavLink>
+                        <Button onClick={handleOpen} variant="contained" sx={{ ml: 2, mt: 1, float: "right" }}>
+                            Contact me
+                        </Button>
+                    </Box>
+
                 </Typography>
             </Toolbar>
         </AppBar>
